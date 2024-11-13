@@ -1,1 +1,82 @@
-/* You can add global styles to this file, and also import other style files */
+html, body {
+  margin: 0;
+}
+
+* {
+  box-sizing: content-box;
+}
+
+:root {
+  --primary-color: #3EAFF7;
+  --accent-color: #EFAE00;
+  --success-color: #23C88B;
+  --warn-color: #C33422;
+  --white-color: rgba(255, 255, 255, 0.87);
+  --gray-color: rgba(220, 220, 220, 0.6);
+  --default-box-shadow: 2px 2px 1px rgba(0, 0, 0, .2);
+  --default-text-shadow: 1px .5px 2px rgba(0, 0, 0, .5);
+  --default-big-box-shadow: 2px 2px 3px rgba(0, 0, 0, .4);
+}
+
+// The following styles should be on separate files, keeping here for sake of time
+.primary-button {
+  border-radius: 8px;
+  border: none;
+  box-shadow: var(--default-box-shadow);
+  text-shadow: var(--default-text-shadow);
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: all 0.2s, background-color 0.5s;
+
+  &:disabled {
+    background-color: var(--gray-color);
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    box-shadow: var(--default-big-box-shadow);
+    color: #000;
+    background-color: var(--accent-color);
+    text-shadow: none;
+  }
+}
+
+.divider {
+  border: 1px solid var(--primary-color);
+  width: 100%;
+  margin: 32px 0;
+}
+
+.loader {
+  $size: 48px;
+  border: 16px solid var(--gray-color);
+  border-top: 16px solid var(--primary-color);
+  border-radius: 50%;
+  width: $size;
+  height: $size;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+input[type=number]{
+  max-width: 86px;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  font-size: 1rem;
+  height: 32px;
+
+  &:focus-within {
+    outline-color: var(--accent-color);
+  }
+}

@@ -1,0 +1,70 @@
+<!-- THIS COMPONENT SHOULD BE EXTRACTED TO OTHER SMALLER COMPONENTS TO AVOID CODING REPETITION
+BUT I DON'T HAVE TIME TO DO IT NOW -->
+
+<span class="title">CAMERAS</span>
+<div class="config-container">
+    <div  class="cameras-list">
+        <span class="title">Software Camera Requirements</span>
+        <form class="camera-config" [formGroup]="softwareCameraFG"
+            [class.approved]="hasComputed() && approvedCamerasIndexes().length > 0"
+            [class.not-approved]="hasComputed() && approvedCamerasIndexes().length <= 0">
+            @if(hasComputed()){
+                <label class="approval-label">{{ approvedCamerasIndexes().length }} <span [ngPlural]="approvedCamerasIndexes().length">
+                    <ng-template ngPluralCase="=1">CAMERA</ng-template>
+                    <ng-template ngPluralCase="other">CAMERAS</ng-template>
+                </span> FIT</label>
+            }
+            <div class="group" formGroupName="lightLevel" [class.error]="softwareCameraFG.get('lightLevel')?.invalid">
+                <label>Light Level</label>
+                @if(softwareCameraFG.get('lightLevel')?.invalid){
+                    <label class="error">Invalid range</label>
+                }
+                <input placeholder="Minimum" type="number" formControlName="min"/>
+                <input placeholder="Maximum" type="number" formControlName="max"/>
+            </div>
+            <div class="group" formGroupName="subjectDistance" [class.error]="softwareCameraFG.get('subjectDistance')?.invalid" >
+                <label>Subject Distance</label>
+                @if(softwareCameraFG.get('subjectDistance')?.invalid){
+                    <label class="error">Invalid range</label>
+                }
+                <input placeholder="Minimum" type="number" formControlName="min"/>
+                <input placeholder="Maximum" type="number" formControlName="max"/>
+            </div>
+        </form>
+    </div>
+    <div class="cameras-list">
+        <span class="title">Hardware Cameras</span>
+        @for(cameraFG of hardwareCameraFGArray.controls; track cameraFG){
+            <form class="camera-config" 
+                  [class.approved]="hasComputed() && approvedCamerasIndexes().indexOf($index) > -1"
+                  [class.not-approved]="hasComputed() && approvedCamerasIndexes().indexOf($index) < 0"
+                  [formGroup]="cameraFG">
+                @if(hasComputed()){
+                    <label class="approval-label">{{ approvedCamerasIndexes().indexOf($index) > -1 ? 'WORKS' : 'DOES NOT WORK'}}</label>
+                }
+                @if(hardwareCameraFGArray.controls.length > 1) {
+                    <span class="close-icon" (click)="removeHardwareCamera($index)">&#10006;</span>
+                }
+
+                <div class="group" [class.error]="cameraFG.get('lightLevel')?.invalid" formGroupName="lightLevel">
+                    <label>Light Level</label>
+                    @if(cameraFG.get('lightLevel')?.invalid){
+                        <label class="error">Invalid range</label>
+                    }
+                    <input placeholder="Minimum" type="number" formControlName="min"/>
+                    <input placeholder="Maximum" type="number" formControlName="max"/>
+                </div>
+                <div class="group" [class.error]="cameraFG.get('subjectDistance')?.invalid" formGroupName="subjectDistance">
+                    <label>Subject Distance</label>
+                    @if(cameraFG.get('subjectDistance')?.invalid){
+                        <label class="error">Invalid range</label>
+                    }
+                    <input placeholder="Minimum" type="number" formControlName="min"/>
+                    <input placeholder="Maximum" type="number" formControlName="max"/>
+                </div>
+            </form>
+        }
+        <button class="primary-button" (click)="addNewHardwareCamera()">Add new camera</button>
+    </div>
+</div>
+<button class="primary-button" [disabled]="hardwareCameraFGArray.invalid || softwareCameraFG.invalid" (click)="calculateCameras()">Calculate Cameras</button>

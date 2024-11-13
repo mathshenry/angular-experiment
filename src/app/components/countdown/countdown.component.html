@@ -1,0 +1,7 @@
+@if (hasError()) {
+  <span>ERROR LOADING DEADLINE</span>
+} @else if (isLoading()) {
+  <span>LOADING...</span>
+} @else {
+  <span>Seconds left to deadline: <span class="time" [class.warn]="warnStyle()">{{ timeLeft() }}</span></span>
+}

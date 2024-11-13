@@ -1,0 +1,27 @@
+:host {
+  background-color: var(--accent-color);
+  border-radius: 16px;
+  box-shadow: var(--default-big-box-shadow);
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  font-size: 2rem;
+  gap: 16px;
+  line-height: 3rem;
+  padding: 24px;
+  text-align: center;
+  width: 50svw;
+
+  .time {
+    font-size: 3rem;
+
+    &.warn {
+      color: var(--warn-color);
+    }
+  }
+
+  &.error {
+    background-color: var(--warn-color);
+    color: var(--white-color);
+  }
+}
